@@ -4,7 +4,6 @@ Proyecto del curso **Despliegue de Soluciones Analíticas (MIAD, Universidad de 
 Producto de datos que estima la probabilidad de churn de cada cliente y la **pérdida esperada de MRR**, para que el área de retención priorice sus campañas. El producto se compone de un modelo supervisado, una API, un tablero y un despliegue en Docker.
 
 - **Datos:** [Kaggle: Telco Customer Churn (IBM)](https://www.kaggle.com/datasets/blastchar/telco-customer-churn/data). 7.043 clientes y 21 variables.
-- **Problema y pregunta de negocio:** [`docs/01_problema_y_preguntas_negocio.md`](docs/01_problema_y_preguntas_negocio.md)
 - **Exploración de datos:** [`notebooks/01_exploracion_datos.ipynb`](notebooks/01_exploracion_datos.ipynb) (también en HTML en `reports/`)
 
 ## Estructura
@@ -14,7 +13,6 @@ telco-churn/
 ├── data/
 │   ├── raw/                 # datos originales (versionados con DVC: *.dvc)
 │   └── processed/           # salidas del pipeline (versionadas con DVC: dvc.lock)
-├── docs/                    # problema, pregunta de negocio y alcance
 ├── notebooks/               # exploración de datos
 ├── reports/figures/         # figuras para el reporte
 ├── src/data/
