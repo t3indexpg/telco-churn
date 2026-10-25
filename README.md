@@ -6,7 +6,6 @@ Producto de datos que estima la probabilidad de churn de cada cliente y la **pé
 - **Datos:** [Kaggle: Telco Customer Churn (IBM)](https://www.kaggle.com/datasets/blastchar/telco-customer-churn/data). 7.043 clientes y 21 variables.
 - **Problema y pregunta de negocio:** [`docs/01_problema_y_preguntas_negocio.md`](docs/01_problema_y_preguntas_negocio.md)
 - **Exploración de datos:** [`notebooks/01_exploracion_datos.ipynb`](notebooks/01_exploracion_datos.ipynb) (también en HTML en `reports/`)
-- **Guía de Git y DVC:** [`docs/GUIA_GIT_DVC.md`](docs/GUIA_GIT_DVC.md)
 
 ## Estructura
 
@@ -15,7 +14,7 @@ telco-churn/
 ├── data/
 │   ├── raw/                 # datos originales (versionados con DVC: *.dvc)
 │   └── processed/           # salidas del pipeline (versionadas con DVC: dvc.lock)
-├── docs/                    # problema, pregunta de negocio, guía Git/DVC
+├── docs/                    # problema, pregunta de negocio y alcance
 ├── notebooks/               # exploración de datos
 ├── reports/figures/         # figuras para el reporte
 ├── src/data/

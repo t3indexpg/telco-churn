@@ -1,8 +1,7 @@
-# Problema, pregunta de negocio y alcance — versión preliminar
+# Problema, pregunta de negocio y alcance
 
 **Proyecto:** Predicción de churn y priorización de retención · Telco Customer Churn
 **Datos:** [Kaggle — Telco Customer Churn (IBM)](https://www.kaggle.com/datasets/blastchar/telco-customer-churn/data)
-**Estado:** v0, para discusión del equipo (se puede ampliar, recortar o dejar como está).
 
 ---
 
@@ -25,53 +24,8 @@ El dataset describe a 7.043 clientes de una operadora ficticia de California (IB
 
 ---
 
-## 2. Planteamiento del problema: 15 iteraciones
+## 2. Planteamiento del problema
 
-Cada versión toma la anterior y le suma un elemento más: dato, impacto, usuario, restricción, acción o medida de éxito. La **iteración 15** es la que se propone para el reporte.
-
-**1. Enunciado genérico.**
-La empresa pierde clientes y no sabe cuáles se van a ir.
-
-**2. + Magnitud.**
-En el último mes, el 26,5 % de los clientes de la operadora canceló el servicio, y la empresa no sabe de antemano quiénes se irán.
-
-**3. + Impacto financiero.**
-El 26,5 % de los clientes canceló en el último mes. Eso equivale al 30,5 % del ingreso mensual recurrente (USD 139 mil/mes, cerca de USD 1,67 M al año), porque se van los clientes que más pagan.
-
-**4. + Costo de oportunidad.**
-Esa pérdida del 30,5 % del MRR tendría que reponerse con clientes nuevos, que cuestan entre 5 y 25 veces más que retener a los actuales. Cada cliente que se va le pega dos veces al resultado: se pierde su ingreso y hay que pagar por reemplazarlo.
-
-**5. + Causa operativa.**
-La pérdida no se debe solo a que los clientes se van. También pesa que la retención es **reactiva**: el área actúa cuando el cliente ya pidió cancelar, y en ese punto la probabilidad de recuperarlo es baja y la concesión que hay que hacerle es alta.
-
-**6. + Oportunidad analítica.**
-La empresa ya tiene datos de perfil, contrato, servicios y facturación de cada cliente. Con ellos se puede **anticipar** quién tiene alta probabilidad de cancelar y actuar antes de que lo pida, en vez de reaccionar.
-
-**7. + Usuario y decisión.**
-El **área de retención / experiencia del cliente** decide cada mes a qué clientes contactar y con qué oferta. Hoy esa decisión se toma por intuición o con reglas simples, sin un puntaje de riesgo individual.
-
-**8. + Restricción de capacidad.**
-El área tiene un presupuesto y una capacidad de contacto limitados (llamadas, descuentos, beneficios), así que no puede intervenir a toda la base. Necesita **priorizar**: a qué 10-20 % de clientes contactar primero.
-
-**9. + Criterio de valor.**
-Para priorizar no basta la probabilidad de churn. Un cliente de USD 100/mes con 60 % de riesgo representa más pérdida esperada que uno de USD 20/mes con 80 %. La priorización debe ordenar por **pérdida esperada = probabilidad de churn × MRR del cliente**.
-
-**10. + Evidencia de concentración.**
-El riesgo no está repartido de forma uniforme. Se concentra en los clientes con contrato mes a mes, fibra óptica, pago con cheque electrónico y menos de 12 meses de antigüedad: un segmento con el 19 % de los clientes explica el 49 % del MRR perdido. Un modelo puede encontrar estos patrones, y sus combinaciones menos obvias, a nivel de cada cliente.
-
-**11. + Accionabilidad.**
-Además de saber *quién* se va, el área necesita saber *por qué*, para elegir la palanca correcta. Las palancas observadas en los datos son migrar a contrato anual (churn 43 % → 11 %), pasar a pago automático (35 % → 16 %) y agregar soporte técnico o seguridad online (31 % → 15 %). La solución debe mostrar los factores que explican el riesgo de cada cliente.
-
-**12. + Asimetría de errores.**
-Los errores no cuestan lo mismo. Dejar pasar a un cliente que se va (falso negativo) cuesta su MRR más el costo de reemplazarlo. Contactar a uno que no se iba a ir (falso positivo) cuesta una llamada o un descuento. El modelo debe privilegiar la **detección (recall)**, con un umbral ajustable al costo de la campaña.
-
-**13. + Criterios de éxito medibles.**
-El modelo se considera útil si, sobre datos no vistos, logra **AUC ≥ 0,80**, **recall de churn ≥ 75 %** y un **lift ≥ 2x en el 20 % de mayor riesgo**. La línea base preliminar ya da AUC 0,84 y lift 2,5x: contactando al 20 % de mayor riesgo se llega al 49 % de los churners y al 54 % del MRR en riesgo.
-
-**14. + Producto desplegable.**
-Para que se use en el trabajo diario, el modelo se entrega como un **producto de datos**: un modelo supervisado empaquetado, una **API** que devuelve la probabilidad de churn y la pérdida esperada de un cliente, y un **tablero** que muestra los indicadores de churn y MRR en riesgo, el ranking de clientes a contactar y un simulador de escenarios. Todo se despliega en **contenedores Docker**.
-
-**15. Versión final integrada (propuesta).**
 > La operadora pierde cada mes al **26,5 % de sus clientes**, lo que equivale al **30,5 % de su ingreso mensual recurrente (≈ USD 1,67 M al año)**. Reponer ese ingreso con clientes nuevos cuesta varias veces más que retener a los actuales. Hoy el área de retención actúa de forma **reactiva** y, con una capacidad de contacto limitada, no tiene un criterio objetivo para decidir a quién intervenir ni con qué oferta. Los datos muestran que el riesgo se concentra en perfiles identificables: contrato mes a mes, fibra óptica, pago con cheque electrónico y menos de un año de antigüedad. Un segmento con el 19 % de los clientes explica casi la mitad del MRR perdido. El proyecto propone un **modelo supervisado de clasificación** que estime la probabilidad de churn de cada cliente y, multiplicada por su MRR, la **pérdida esperada**, para priorizar las campañas de retención donde más valor protegen. El modelo se servirá mediante una **API** y se usará desde un **tablero** que muestre el riesgo, sus factores explicativos y el impacto de las palancas de retención, desplegado en **Docker**. El modelo debe privilegiar la detección de clientes en riesgo (recall ≥ 75 %, AUC ≥ 0,80) y concentrar al menos el doble de churners que el azar en el 20 % de mayor riesgo.
 
 ---
@@ -94,7 +48,6 @@ Para que se use en el trabajo diario, el modelo se entrega como un **producto de
 | P7 | ¿Cuánto bajaría el riesgo de un cliente si migra a contrato anual, pago automático o agrega soporte técnico? | Prescriptiva (*what-if*) | API + simulador en el tablero | 43 %→11 %, 35 %→16 %, 31 %→15 % |
 | P8 | ¿Qué umbral de probabilidad conviene, dado el costo de la campaña y el valor del cliente? | Prescriptiva | Tablero (parámetro de costo) | FN más costoso que FP |
 
-*Opcionales, si el equipo quiere ampliar:* ¿hay diferencias de riesgo entre adultos mayores y el resto que justifiquen una oferta diferenciada? (42 % vs. 24 %). ¿El servicio de fibra tiene un problema de precio o de calidad? (fibra 42 % de churn aun con cargos altos).
 
 ---
 
