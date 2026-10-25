@@ -1,0 +1,24 @@
+stages:
+  preparar:
+    cmd: python src/data/make_dataset.py
+    deps:
+      - src/data/make_dataset.py
+      - data/raw/WA_Fn-UseC_-Telco-Customer-Churn.csv
+    params:
+      - data.raw
+      - data.processed
+    outs:
+      - data/processed/telco_churn_limpio.csv
+
+  particion:
+    cmd: python src/data/split_data.py
+    deps:
+      - src/data/split_data.py
+      - data/processed/telco_churn_limpio.csv
+    params:
+      - split.test_size
+      - split.random_state
+      - target
+    outs:
+      - data/processed/train.csv
+      - data/processed/test.csv

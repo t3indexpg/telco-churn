@@ -1,0 +1,11 @@
+data:
+  raw: data/raw/WA_Fn-UseC_-Telco-Customer-Churn.csv
+  processed: data/processed/telco_churn_limpio.csv
+  train: data/processed/train.csv
+  test: data/processed/test.csv
+
+target: Churn
+
+split:
+  test_size: 0.2
+  random_state: 42
