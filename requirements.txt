@@ -10,3 +10,6 @@ jupyter>=1.0
 dvc>=3.0
 dvc-s3>=3.0
 mlflow>=2.10,<4.0
+
+streamlit>=1.30,<2.0
+plotly>=5.20,<7.0
