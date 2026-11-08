@@ -1,0 +1,13 @@
+# Tablero de control – Telco Customer Churn
+
+**Aplicación:** Tablero de análisis histórico y predictivo de abandono de clientes.
+
+**Plataforma:** Streamlit.
+
+**Enlace de acceso:** https://telco-churn-entrega2.streamlit.app/
+
+**Descripción:**
+
+Aplicación interactiva que permite visualizar indicadores históricos de churn, analizar características de los clientes e identificar segmentos con mayor probabilidad de abandono. Incluye herramientas de priorización comercial considerando el riesgo de churn y el impacto económico estimado.
+
+**Propósito:** Apoyar la toma de decisiones y la definición de estrategias de retención de clientes.
