@@ -1,0 +1,50 @@
+
+name: Validacion Docker - Telco Churn API
+
+on:
+  push:
+    branches:
+      - feature/entrega3-api-docker
+  workflow_dispatch:
+
+jobs:
+  docker-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+
+      - name: Construir imagen Docker
+        run: docker build -t telco-churn-api:test .
+
+      - name: Iniciar contenedor
+        run: |
+          docker run -d \
+            --name telco-api \
+            -p 8000:8000 \
+            telco-churn-api:test
+
+      - name: Esperar y verificar API
+        run: |
+          for i in $(seq 1 30); do
+            if curl --fail --silent http://localhost:8000/health; then
+              echo ""
+              echo "API funcionando correctamente"
+              exit 0
+            fi
+            sleep 2
+          done
+          docker logs telco-api
+          exit 1
+
+      - name: Verificar prediccion
+        run: |
+          curl --fail --show-error \
+            -X POST http://localhost:8000/predict \
+            -H "Content-Type: application/json" \
+            --data @cliente_prueba.json
+
+      - name: Mostrar logs si falla
+        if: failure()
+        run: docker logs telco-api
