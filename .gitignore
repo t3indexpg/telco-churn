@@ -20,3 +20,11 @@ credentials*
 .DS_Store
 Thumbs.db
 .vscode/
+
+# Respaldos locales del desarrollo
+app_antes_entrega3.py
+app_entrega2_backup.py
+app_entrega3_antes_*.py
+app_entrega3_prueba.py
+app_respaldo_antes_revision_visual.py
+prediccion_api_antes_docker.py
