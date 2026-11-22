@@ -1,0 +1,19 @@
+FROM python:3.13-slim
+
+WORKDIR /app
+
+COPY requirements-dashboard.txt .
+
+RUN pip install --no-cache-dir -r requirements-dashboard.txt
+
+COPY app.py .
+COPY prediccion_api.py .
+COPY data/processed/telco_churn_limpio.csv data/processed/
+COPY reports/dashboard/predicciones_churn.csv reports/dashboard/
+
+EXPOSE 8501
+
+CMD ["streamlit", "run", "app.py", \
+     "--server.address=0.0.0.0", \
+     "--server.port=8501", \
+     "--server.headless=true"]
